@@ -1,3 +1,5 @@
+import { paste } from '@testing-library/user-event/dist/paste';
+import axios from 'axios';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
@@ -22,15 +24,30 @@ export const LoginForm = ({setIsLoggedIn}) => {
         ))
     }
 
-    function submitHandler(event){
+    async function submitHandler(event){
         event.preventDefault();
+
+        try {
+            const user = await axios.post('http://localhost:4000/login', {
+                email: FormData.email,
+                password: FormData.password
+            })
+
+            localStorage.setItem('user', user.data._id )
+        } catch (error) {
+            console.log(error);
+            return;
+        }
+
+        
+        
         setIsLoggedIn(true);
         toast.success("Logged In")
         navigate("/dashboard");
     }
     return (
         <form onSubmit={submitHandler} 
-            className='flex flex-col w-full gap-y-3 mt-6'
+            className='flex flex-col w-full gap-y-3 mt-6' 
         >
             <label className='w-full'>
                 <p className='text-gray-100 text-[0.96rem] mb-1 leading-[1.375rem] '>

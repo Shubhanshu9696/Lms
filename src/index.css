@@ -19,8 +19,8 @@ code {
   width: 100%;
   display: flex;
   flex-direction: column;
-  
-  background: rgba(6, 16, 45, 0.877)
+  background: rgba(6, 16, 45, 0.877);
+  overflow: auto;
 }
 @tailwind base;
 @tailwind components;

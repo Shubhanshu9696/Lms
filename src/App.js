@@ -7,13 +7,18 @@ import { Signup } from './pages/Signup'
 import { Dashboard } from './pages/Dashboard'
 import { useState } from 'react'
 import {PrivateRoute} from './components/PrivateRoute'
+import Footer from './pages/Footer';
+import CommentSection from './pages/CommentSection';
+// import searchPage from './pages/SearchPage'
+
+
 function App() {
 
   const [isLogedIn, setIsLogedIn] = useState(false);
 
 
   return (
-    <div className="App relative">
+    <div className="App">
       <nav>
         <Navbar isLogedIn = {isLogedIn} setisLogedIn = {setIsLogedIn}  />
       </nav>
@@ -31,6 +36,8 @@ function App() {
           </PrivateRoute>
           } />
       </Routes>
+      {/* <CommentSection/>
+      <Footer/> */}
     </div>
   );
 }

@@ -1,7 +1,14 @@
 import React from 'react'
+import { SearchPage } from './SearchPage'
+import CommentSection from './CommentSection'
+import Footer from './Footer'
 
 export const Dashboard = () => {
   return (
-    <div className='flex justify-center items-center h-screen text-white text-3xl'>Welcome to Dashboard</div>
+    <div className='text-white h-screen' >
+      <SearchPage/>
+      <CommentSection/>
+      <Footer/>
+    </div>
   )
 }

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
@@ -27,12 +28,30 @@ export const SignupForm = ({setIsLoggedIn}) => {
     }
 
 
-    function submitHandler(event){
+    async function submitHandler(event){
         event.preventDefault();
         if(FormData.createPassword !== FormData.confirmPassword){
             toast.error("Password mismatch");
             return ;
         }
+
+        try {
+            
+            const user = await axios.post('http://localhost:4000/register', {
+                name: FormData.firstname + " " + FormData.lastname,
+                email: FormData.email,
+                password: FormData.createPassword
+            })
+
+            localStorage.setItem('user', user.data._id )
+
+        } catch (error) {
+            console.log(error);
+            return
+        }
+
+
+
         setIsLoggedIn(true);
         toast.success("Account created")
 
@@ -59,13 +78,13 @@ export const SignupForm = ({setIsLoggedIn}) => {
                         {/* student button */}
                 <button 
                     className={`${accountType === "student" ?"bg-slate-950 text-gray-100":"bg-transparent text-gray-400"} py-2 px-5 rounded-full transition-all duration-200`}
-                    onClick={()=>setAccoutType("student")}>Student
+                    onClick={()=>setAccoutType("student")}>Normal
                 </button>
 
                         {/* instructor button */}
                 <button
                     className={`${accountType === "instructor" ?"bg-slate-950 text-gray-100":"bg-transparent text-gray-400"} py-2 px-5 rounded-full transition-all duration-200`}
-                    onClick={()=>setAccoutType("instructor")}>Instructor
+                    onClick={()=>setAccoutType("instructor")}>Subscription
                 </button>
             </div>
 
@@ -153,7 +172,7 @@ export const SignupForm = ({setIsLoggedIn}) => {
 
                 <button className='flex w-full justify-center items-center border rounded-[8px] border-yellow-500 bg-amber-500 mt-5 mb-4 px-[12px] py-[8px] ' > Create Account</button>
                 <div className='text-blue-300'>
-                    <p> <span>  <a href='/login'>Already have an account? Login</a>  </span></p>
+                    <p className='underline underline-offset-4 '> <span >  <a href='/login'>Already have an account? Login</a>  </span></p>
                 </div>
             </form>
 
